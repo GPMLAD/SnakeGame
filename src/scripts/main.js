@@ -11,7 +11,9 @@ const drawMap = () => {
 
 const animate = () => {
   drawMap()
+  food.draw()
   player_snake.update()
+  player_snake.eatFood()
   player_snake.draw()
   setTimeout(animate, 1000 / speed)
 }
@@ -68,6 +70,12 @@ class Snake {
       this.x = this.x + horizontalVelocity
       this.y = this.y + verticalVelocity
     }
+
+    this.eatFood = () => {
+      if (this.x == food.x && this.y == food.y) {
+        food.respaw()
+      }
+    }
   }
 }
 
@@ -77,6 +85,31 @@ const player_snake = new Snake(
   blockSize,
   blockSize
 )
+// ========== Food ==========
+class Food {
+  constructor(x, y, w, h) {
+    this.x = x
+    this.y = y
+    this.w = w
+    this.h = h
+    this.draw = () => {
+      c.fillStyle = 'red'
+      c.fillRect(this.x, this.y, blockSize, blockSize)
+    }
+    this.respaw = () => {
+      this.x =
+        Math.floor(Math.random() * (canvas.width / blockSize)) * blockSize
+      this.y =
+        Math.floor(Math.random() * (canvas.heigth / blockSize)) * blockSize
+    }
+  }
+}
 
+const food = new Food(
+  Math.floor(Math.random() * (canvas.width / blockSize)) * blockSize,
+  Math.floor(Math.random() * (canvas.heigth / blockSize)) * blockSize,
+  blockSize,
+  blockSize
+)
 // ========== Initialize ==========
 animate()
