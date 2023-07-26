@@ -27,18 +27,22 @@ let verticalVelocity = 0
 const keyDown = event => {
   switch (event.keyCode) {
     case 37:
+      if (horizontalVelocity > 0) break
       verticalVelocity = 0
       horizontalVelocity = -blockSize
       break
     case 38:
+      if (verticalVelocity > 0) break
       verticalVelocity = -blockSize
       horizontalVelocity = 0
       break
     case 39:
+      if (horizontalVelocity < 0) break
       verticalVelocity = 0
       horizontalVelocity = blockSize
       break
     case 40:
+      if (verticalVelocity < 0) break
       verticalVelocity = blockSize
       horizontalVelocity = 0
       break
