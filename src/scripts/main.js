@@ -11,33 +11,36 @@ const drawMap = () => {
 
 const animate = () => {
   drawMap()
+  player_snake.update()
   player_snake.draw()
-  //requestAnimationFrame(animate)
   setTimeout(animate, 1000 / speed)
 }
 
 const horizontalBlocks = 40
 const verticalBlocks = 40
-let speed = 10
 const blockSize = canvas.width / horizontalBlocks - 2
+
+let speed = 10
+let horizontalVelocity = 0
+let verticalVelocity = 0
 // ========== Control ==========
 const keyDown = event => {
   switch (event.keyCode) {
     case 37:
-      console.log('left')
-      player_snake.left()
+      verticalVelocity = 0
+      horizontalVelocity = -blockSize
       break
     case 38:
-      console.log('up')
-      player_snake.up()
+      verticalVelocity = -blockSize
+      horizontalVelocity = 0
       break
     case 39:
-      console.log('right')
-      player_snake.right()
+      verticalVelocity = 0
+      horizontalVelocity = blockSize
       break
     case 40:
-      console.log('down')
-      player_snake.down()
+      verticalVelocity = blockSize
+      horizontalVelocity = 0
       break
   }
 }
@@ -57,20 +60,9 @@ class Snake {
       c.fillRect(this.x, this.y, blockSize, blockSize)
     }
 
-    this.left = () => {
-      this.x = this.x - blockSize
-    }
-
-    this.right = () => {
-      this.x = this.x + blockSize
-    }
-
-    this.up = () => {
-      this.y = this.y - blockSize
-    }
-
-    this.down = () => {
-      this.y = this.y + blockSize
+    this.update = () => {
+      this.x = this.x + horizontalVelocity
+      this.y = this.y + verticalVelocity
     }
   }
 }
