@@ -35,7 +35,7 @@ const horizontalBlocks = 20
 const verticalBlocks = 20
 const blockSize = canvas.width / horizontalBlocks
 
-const initialSpeed = 5
+const initialSpeed = 10
 let speed = initialSpeed
 let horizontalVelocity = 0
 let verticalVelocity = 0
@@ -105,7 +105,7 @@ document.body.addEventListener('keydown', keyDown)
 
 // ========== Snake ==========
 const snakeBody = []
-let tailLength = 20
+let tailLength = 200
 class Snake {
   constructor(x, y, w, h) {
     this.x = x
@@ -136,10 +136,10 @@ class Snake {
 
     this.eatFood = () => {
       if (this.x == food.x && this.y == food.y) {
-        food.respaw()
+        food.respawn()
         tailLength++
         score++
-        if (speed < 20) {
+        if (speed < 20 && tailLength < 21) {
           speed = Math.floor(tailLength / 2) + initialSpeed
         }
       }
@@ -171,11 +171,18 @@ class Food {
       c.fillStyle = 'red'
       c.fillRect(this.x, this.y, w, h)
     }
-    this.respaw = () => {
+    this.respawn = () => {
       this.x =
         Math.floor(Math.random() * (canvas.width / blockSize)) * blockSize
       this.y =
         Math.floor(Math.random() * (canvas.heigth / blockSize)) * blockSize
+      for (let i = 0; i < snakeBody.length; i++) {
+        const part = snakeBody[i]
+        if (this.x == part.x && this.y == part.y) {
+          console.log('Deu respawn duas vezes')
+          this.respawn()
+        }
+      }
     }
   }
 }
