@@ -28,6 +28,7 @@ const animate = () => {
   player_snake.eatFood()
   player_snake.draw()
   //drawScore()
+  moveIsAvaliable = true
   setTimeout(animate, 1000 / speed)
 }
 
@@ -39,6 +40,7 @@ const initialSpeed = 10
 let speed = initialSpeed
 let horizontalVelocity = 0
 let verticalVelocity = 0
+let moveIsAvaliable = true
 
 let score = 0
 
@@ -77,6 +79,10 @@ const drawGameOver = () => {
 }
 // ========== Control ==========
 const keyDown = event => {
+  if (!moveIsAvaliable) {
+    return
+  }
+  moveIsAvaliable = false
   switch (event.keyCode) {
     case 37:
       if (horizontalVelocity > 0) break
@@ -105,7 +111,7 @@ document.body.addEventListener('keydown', keyDown)
 
 // ========== Snake ==========
 const snakeBody = []
-let tailLength = 200
+let tailLength = 2
 class Snake {
   constructor(x, y, w, h) {
     this.x = x

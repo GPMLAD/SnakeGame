@@ -12,8 +12,10 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  gap: 12px;
 }
 
 canvas {
   box-shadow: 2px 2px 20px 1px red;
+  border-radius: 6px;
 }
