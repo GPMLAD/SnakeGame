@@ -1,7 +1,14 @@
 const canvas = document.getElementById('canvas')
 const c = canvas.getContext('2d')
+const body = document.getElementsByTagName('body')[0]
 const scoreElement = document.getElementsByTagName('h2')[0]
-const buttonReset = document.getElementsByTagName('button')[0]
+const button = document.createElement('button')
+button.innerText = 'Try again'
+
+const showButton = () => {
+  body.appendChild(button)
+  button.addEventListener('click', resetGame)
+}
 
 canvas.width = 400
 canvas.heigth = 400
@@ -13,7 +20,10 @@ const gameOverSound = new Audio('./src/sounds/gameOverEffect.wav')
 eatSound.volume = 0.5
 
 const resetGame = () => {
-  reset = true
+  button.removeEventListener('click', resetGame)
+  body.removeChild(button)
+  initialConditions()
+  animate()
 }
 
 const colision = () => {
@@ -46,7 +56,6 @@ const animate = () => {
     reset = false
     initialConditions()
     setTimeout(animate, 100)
-
   }
 }
 
@@ -76,8 +85,6 @@ let moveIsAvaliable = true
 
 let score = 0
 
-buttonReset.addEventListener('click', resetGame)
-
 const gameOver = () => {
   if (horizontalVelocity == 0 && verticalVelocity == 0) {
     return false
@@ -90,12 +97,14 @@ const gameOver = () => {
   ) {
     drawGameOver()
     gameOverSound.play()
+    showButton()
     return true
   }
 
   if (colision()) {
     drawGameOver()
     gameOverSound.play()
+    showButton()
     return true
   }
   return false
