@@ -1,13 +1,20 @@
 const canvas = document.getElementById('canvas')
 const c = canvas.getContext('2d')
-const span = document.getElementsByTagName('h2')[0]
+const scoreElement = document.getElementsByTagName('h2')[0]
+const buttonReset = document.getElementsByTagName('button')[0]
 
 canvas.width = 400
 canvas.heigth = 400
 
+let reset = false
+
 const eatSound = new Audio('./src/sounds/eatEffect.wav')
-eatSound.volume = 0.5
 const gameOverSound = new Audio('./src/sounds/gameOverEffect.wav')
+eatSound.volume = 0.5
+
+const resetGame = () => {
+  reset = true
+}
 
 const colision = () => {
   for (let i = 0; i < snakeBody.length; i++) {
@@ -33,9 +40,30 @@ const animate = () => {
   player_snake.draw()
   drawScore()
   moveIsAvaliable = true
-  setTimeout(animate, 1000 / speed)
+  animationId = setTimeout(animate, 1000 / speed)
+  if (reset) {
+    clearTimeout(animationId)
+    reset = false
+    initialConditions()
+    setTimeout(animate, 100)
+
+  }
 }
 
+const initialConditions = () => {
+  speed = initialSpeed
+  horizontalVelocity = 0
+  verticalVelocity = 0
+  moveIsAvaliable = true
+  score = 0
+  tailLength = 2
+  snakeBody.length = 0
+  player_snake.x = (canvas.width / blockSize / 2) * blockSize
+  player_snake.y = (canvas.heigth / blockSize / 2) * blockSize
+  food.respawn()
+}
+
+let animationId
 const horizontalBlocks = 20
 const verticalBlocks = 20
 const blockSize = canvas.width / horizontalBlocks
@@ -47,6 +75,8 @@ let verticalVelocity = 0
 let moveIsAvaliable = true
 
 let score = 0
+
+buttonReset.addEventListener('click', resetGame)
 
 const gameOver = () => {
   if (horizontalVelocity == 0 && verticalVelocity == 0) {
@@ -70,9 +100,9 @@ const gameOver = () => {
   }
   return false
 }
-//colocar a info em um <span>
+//colocar a info em um <scoreElement>
 const drawScore = () => {
-  span.innerText = `Score: ${score}`
+  scoreElement.innerText = `Score: ${score}`
 }
 
 const drawGameOver = () => {
