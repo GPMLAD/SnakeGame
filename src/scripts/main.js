@@ -5,6 +5,10 @@ const span = document.getElementsByTagName('h2')[0]
 canvas.width = 400
 canvas.heigth = 400
 
+const eatSound = new Audio('./src/sounds/eatEffect.wav')
+eatSound.volume = 0.5
+const gameOverSound = new Audio('./src/sounds/gameOverEffect.wav')
+
 const colision = () => {
   for (let i = 0; i < snakeBody.length; i++) {
     let part = snakeBody[i]
@@ -27,7 +31,7 @@ const animate = () => {
   food.draw()
   player_snake.eatFood()
   player_snake.draw()
-  //drawScore()
+  drawScore()
   moveIsAvaliable = true
   setTimeout(animate, 1000 / speed)
 }
@@ -36,7 +40,7 @@ const horizontalBlocks = 20
 const verticalBlocks = 20
 const blockSize = canvas.width / horizontalBlocks
 
-const initialSpeed = 10
+const initialSpeed = 2
 let speed = initialSpeed
 let horizontalVelocity = 0
 let verticalVelocity = 0
@@ -55,20 +59,19 @@ const gameOver = () => {
     player_snake.y >= canvas.heigth
   ) {
     drawGameOver()
+    gameOverSound.play()
     return true
   }
 
   if (colision()) {
     drawGameOver()
+    gameOverSound.play()
     return true
   }
   return false
 }
 //colocar a info em um <span>
 const drawScore = () => {
-  c.fillStyle = 'white'
-  c.font = '14px serif'
-  c.fillText('Score:' + score, canvas.width - 75, 15)
   span.innerText = `Score: ${score}`
 }
 
@@ -142,9 +145,10 @@ class Snake {
 
     this.eatFood = () => {
       if (this.x == food.x && this.y == food.y) {
-        food.respawn()
+        eatSound.play()
         tailLength++
         score++
+        food.respawn()
         if (speed < 20 && tailLength < 21) {
           speed = Math.floor(tailLength / 2) + initialSpeed
         }
@@ -185,7 +189,6 @@ class Food {
       for (let i = 0; i < snakeBody.length; i++) {
         const part = snakeBody[i]
         if (this.x == part.x && this.y == part.y) {
-          console.log('Deu respawn duas vezes')
           this.respawn()
         }
       }
