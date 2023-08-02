@@ -23,7 +23,7 @@ Enjoy the thrill of the classic snake game and see how long you can grow your sn
 
 - HTML
 - CSS
-- JavaScript (or TypeScript)
+- JavaScript and TypeScript
 
 ## How to Run the Game
 
