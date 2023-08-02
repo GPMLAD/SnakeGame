@@ -1,0 +1,26 @@
+{
+  "name": "snakegame",
+  "version": "1.0.0",
+  "description": "## ToDO",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GPMLAD/SnakeGame.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GPMLAD/SnakeGame/issues"
+  },
+  "homepage": "https://github.com/GPMLAD/SnakeGame#readme",
+  "devDependencies": {
+    "prettier": "^3.0.0",
+    "typescript": "^5.1.6"
+  }
+}
