@@ -4,7 +4,6 @@ const body = document.getElementsByTagName('body')[0]
 const scoreElement = document.getElementsByTagName('h2')[0]
 const button = document.createElement('button')
 button.innerText = 'Try again'
-
 const showButton = () => {
   body.appendChild(button)
   button.addEventListener('click', resetGame)
@@ -160,12 +159,12 @@ class Snake {
     this.y = y
     this.w = w
     this.h = h
-
-    this.draw = () => {
+  }
+    draw = () => {
       for (let i = 0; i < snakeBody.length; i++) {
         c.fillStyle = `rgb(${(snakeBody.length - i) * 10},255,0)`
         const part = snakeBody[i]
-        c.fillRect(part.x, part.y, w, h)
+        c.fillRect(part.x, part.y, this.w, this.h)
       }
 
       snakeBody.push(new SnakePart(this.x, this.y))
@@ -174,15 +173,15 @@ class Snake {
         snakeBody.shift()
       }
       c.fillStyle = 'green'
-      c.fillRect(this.x, this.y, w, h)
+      c.fillRect(this.x, this.y, this.w, this.h)
     }
 
-    this.update = () => {
+    update = () => {
       this.x = this.x + horizontalVelocity
       this.y = this.y + verticalVelocity
     }
 
-    this.eatFood = () => {
+    eatFood = () => {
       if (this.x == food.x && this.y == food.y) {
         eatSound.play()
         tailLength++
@@ -194,7 +193,7 @@ class Snake {
       }
     }
   }
-}
+
 
 class SnakePart {
   constructor(x, y) {
