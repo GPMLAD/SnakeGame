@@ -1,3 +1,4 @@
+/*
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const c = canvas.getContext('2d')!;
 
@@ -253,3 +254,4 @@ const food = new Food(
 );
 // ========== Initialize ==========
 animate();
+*/
